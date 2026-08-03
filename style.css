@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #050505;
+    color: white;
+}
+
+header {
+    width: 100%;
+    padding: 25px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 15px;
+}
+
+.hero {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: 50px;
+    background: linear-gradient(
+        rgba(0,0,0,0.5),
+        rgba(0,0,0,0.8)
+    );
+}
+
+.content h1 {
+    font-size: 60px;
+    max-width: 600px;
+    letter-spacing: 2px;
+}
+
+.content p {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #ccc;
+}
+
+button {
+    margin-top: 35px;
+    padding: 15px 40px;
+    background: white;
+    color: black;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.collection {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.collection h2 {
+    font-size: 40px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+}
