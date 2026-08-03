@@ -326,4 +326,23 @@ nav a:hover {
     color: #aaa;
     font-size: 20px;
     line-height: 1.8;
+}.contact {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+}
+
+.contact h1 {
+    font-size: 45px;
+    letter-spacing: 4px;
+}
+
+.contact p {
+    margin-top: 20px;
+    color: #aaa;
+    font-size: 18px;
 }
