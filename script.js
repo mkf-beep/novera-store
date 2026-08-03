@@ -1,0 +1,1 @@
+console.log("NOVERA website loaded");
