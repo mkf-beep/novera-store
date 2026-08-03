@@ -541,4 +541,14 @@ nav a:hover::after {
     .content h1 {
         font-size: 40px;
     }
+}.featured {
+    padding: 80px 30px;
+    text-align: center;
+}
+
+.featured-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
 }
