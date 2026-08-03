@@ -182,3 +182,56 @@ footer {
     background: white;
     color: black;
 }
+@media (max-width: 768px) {
+
+    header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .logo {
+        font-size: 28px;
+    }
+
+    nav a {
+        margin: 0 10px;
+        font-size: 14px;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .content h1 {
+        font-size: 38px;
+    }
+
+    .product-image img {
+        width: 300px;
+        margin-top: 30px;
+    }
+
+    .products {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+    }
+
+    .product-page {
+        flex-direction: column;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .product-photo img {
+        width: 320px;
+    }
+
+}
