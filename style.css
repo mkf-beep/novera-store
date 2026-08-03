@@ -568,4 +568,16 @@ footer p {
 .logo {
     display: flex;
     align-items: center;
+}.logo img {
+    width: 70px !important;
+    height: auto !important;
+    max-width: 70px !important;
+}
+
+header .logo {
+    width: 70px;
+}
+
+header .logo img {
+    object-fit: contain;
 }
