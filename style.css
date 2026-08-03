@@ -506,4 +506,39 @@ nav a:hover::after {
 .product-link {
     text-decoration: none;
     color: white;
+}header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 80px 40px;
+}
+
+.product-image img {
+    width: 450px;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .content h1 {
+        font-size: 40px;
+    }
 }
