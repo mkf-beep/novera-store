@@ -368,4 +368,8 @@ nav a:hover {
 
 .blue {
     background: royalblue;
+}.cart-btn {
+    cursor: pointer;
+    letter-spacing: 2px;
+    font-size: 16px;
 }
