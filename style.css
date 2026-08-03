@@ -345,4 +345,27 @@ nav a:hover {
     margin-top: 20px;
     color: #aaa;
     font-size: 18px;
+}.colors {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.colors button {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 1px solid #555;
+}
+
+.black {
+    background: black;
+}
+
+.white {
+    background: white;
+}
+
+.blue {
+    background: royalblue;
 }
