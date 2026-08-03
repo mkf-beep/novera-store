@@ -235,3 +235,21 @@ footer {
     }
 
 }
+.story {
+    text-align: center;
+    padding: 100px 25px;
+    background: #0b0b0b;
+}
+
+.story h2 {
+    font-size: 42px;
+    letter-spacing: 3px;
+}
+
+.story p {
+    max-width: 700px;
+    margin: 30px auto;
+    color: #aaa;
+    font-size: 18px;
+    line-height: 1.8;
+}
