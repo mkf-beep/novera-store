@@ -135,3 +135,7 @@ footer {
     color: #aaa;
     margin-top: 10px;
 }
+.product-link {
+    text-decoration: none;
+    color: white;
+}
