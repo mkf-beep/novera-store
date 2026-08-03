@@ -559,4 +559,13 @@ nav a:hover::after {
 
 footer p {
     color: #888;
-} 
+} .logo img {
+    width: 80px;
+    height: auto;
+    display: block;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
