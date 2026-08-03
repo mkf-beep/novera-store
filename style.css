@@ -274,4 +274,8 @@ footer {
         font-size: 32px;
     }
 
+}.main-logo {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: contain !important;
 }
