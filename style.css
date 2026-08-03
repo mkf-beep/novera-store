@@ -482,4 +482,28 @@ nav a:hover::after {
 
 .card button:hover {
     background: #ccc;
+}.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: #101010;
+    padding: 20px;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.card img {
+    width: 100%;
+}
+
+.product-link {
+    text-decoration: none;
+    color: white;
 }
