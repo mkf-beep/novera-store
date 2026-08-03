@@ -382,4 +382,22 @@ nav a:hover {
     width: 450px;
     max-width: 90%;
     border-radius: 10px;
+}.hero {
+    min-height: 85vh;
+    background:
+    linear-gradient(
+        rgba(0,0,0,0.35),
+        rgba(0,0,0,0.8)
+    );
+}
+
+.content h1 {
+    font-size: 70px;
+    letter-spacing: 5px;
+    font-weight: 800;
+}
+
+.content p {
+    max-width: 450px;
+    line-height: 1.7;
 }
