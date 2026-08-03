@@ -473,4 +473,13 @@ nav a:hover::after {
     font-size: 55px;
     letter-spacing: 5px;
     margin-bottom: 60px;
+}.card button {
+    margin-top: 15px;
+    background: white;
+    color: black;
+    padding: 12px 25px;
+}
+
+.card button:hover {
+    background: #ccc;
 }
