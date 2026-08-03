@@ -139,3 +139,46 @@ footer {
     text-decoration: none;
     color: white;
 }
+.product-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+    padding: 80px 50px;
+}
+
+.product-photo img {
+    width: 450px;
+    max-width: 90%;
+}
+
+.product-info {
+    max-width: 400px;
+}
+
+.product-info h1 {
+    font-size: 40px;
+}
+
+.product-info h2 {
+    margin: 20px 0;
+}
+
+.sizes {
+    display: flex;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.sizes button {
+    background: transparent;
+    color: white;
+    border: 1px solid #555;
+    padding: 10px 18px;
+}
+
+.cart-btn {
+    width: 100%;
+    background: white;
+    color: black;
+}
