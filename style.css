@@ -78,3 +78,26 @@ footer {
     padding: 30px;
     color: #777;
 }
+.product-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-image img {
+    width: 420px;
+    max-width: 90%;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.7));
+    transition: transform 0.5s ease;
+}
+
+.product-image img:hover {
+    transform: scale(1.05);
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
