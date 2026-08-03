@@ -426,4 +426,19 @@ button:hover {
     background: #ddd;
 }img {
     object-fit: contain;
+}.launch {
+    text-align: center;
+    padding: 100px 20px;
+    background: #080808;
+}
+
+.launch h2 {
+    font-size: 55px;
+    letter-spacing: 6px;
+}
+
+.launch p {
+    margin: 25px auto;
+    color: #aaa;
+    font-size: 20px;
 }
