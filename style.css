@@ -372,4 +372,14 @@ nav a:hover {
     cursor: pointer;
     letter-spacing: 2px;
     font-size: 16px;
+}.product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-gallery img {
+    width: 450px;
+    max-width: 90%;
+    border-radius: 10px;
 }
