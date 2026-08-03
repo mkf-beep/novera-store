@@ -464,4 +464,13 @@ nav a::after {
 
 nav a:hover::after {
     width: 100%;
+}.collection-page {
+    padding: 80px 30px;
+    text-align: center;
+}
+
+.collection-page h1 {
+    font-size: 55px;
+    letter-spacing: 5px;
+    margin-bottom: 60px;
 }
