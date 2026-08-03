@@ -400,4 +400,30 @@ nav a:hover {
 .content p {
     max-width: 450px;
     line-height: 1.7;
+}:root {
+    --novera-black: #050505;
+    --novera-white: #ffffff;
+    --novera-gray: #a0a0a0;
+}
+
+body {
+    background: var(--novera-black);
+    color: var(--novera-white);
+}
+
+h1, h2, h3 {
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+button {
+    border-radius: 0;
+    padding: 16px 45px;
+    letter-spacing: 2px;
+}
+
+button:hover {
+    background: #ddd;
+}img {
+    object-fit: contain;
 }
