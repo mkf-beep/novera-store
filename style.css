@@ -278,4 +278,16 @@ footer {
     width: 60px !important;
     height: 60px !important;
     object-fit: contain !important;
+}.header-logo {
+    width: 70px !important;
+    height: 70px !important;
+    max-width: 70px !important;
+    max-height: 70px !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+.logo {
+    width: 70px !important;
+    height: 70px !important;
 }
