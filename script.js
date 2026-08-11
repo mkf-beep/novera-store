@@ -885,9 +885,7 @@ function setupCheckoutButton() {
             }
 
 
-            alert(
-                "Checkout is ready. Online payment will be connected in the next step."
-            );
+            window.location.href = "payment.html";
 
         }
     );

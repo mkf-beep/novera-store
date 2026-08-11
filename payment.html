@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+<title>NOVERA Payment</title>
+<link
+    rel="stylesheet"
+    href="style.css">
+<link
+    rel="icon"
+    href="images/novera-logo.png">
+</head>
+<body>
+<header class="site-header">
+<a
+    href="index.html"
+    class="logo">
+    NOVERA
+</a>
+<nav class="main-nav">
+    <a href="index.html">
+        Home
+    </a>
+    <a href="collection.html">
+        Collection
+    </a>
+    <a href="about.html">
+        About
+    </a>
+    <a href="contact.html">
+        Contact
+    </a>
+    <a href="cart.html">
+        Cart
+    </a>
+</nav>
+</header>
+<main class="payment-page">
+<section class="payment-heading">
+    <span>
+        NOVERA / PAYMENT
+    </span>
+    <h1>
+        SECURE<br>
+        CHECKOUT.
+    </h1>
+    <p>
+        Review your order and choose
+        your preferred payment method.
+    </p>
+</section>
+<section class="payment-layout">
+    <div class="payment-methods">
+        <div class="payment-section-title">
+            <span>
+                01
+            </span>
+            <h2>
+                PAYMENT METHOD
+            </h2>
+        </div>
+        <div class="payment-options">
+            <label class="payment-option">
+                <input
+                    type="radio"
+                    name="payment-method"
+                    value="card"
+                    checked>
+                <div class="payment-option-content">
+                    <strong>
+                        CREDIT / DEBIT CARD
+                    </strong>
+                    <span>
+                        Visa · Mastercard
+                    </span>
+                </div>
+            </label>
+            <label class="payment-option">
+                <input
+                    type="radio"
+                    name="payment-method"
+                    value="benefit">
+                <div class="payment-option-content">
+                    <strong>
+                        BENEFIT
+                    </strong>
+                    <span>
+                        Bahrain payment network
+                    </span>
+                </div>
+            </label>
+            <label class="payment-option">
+                <input
+                    type="radio"
+                    name="payment-method"
+                    value="apple-pay">
+                <div class="payment-option-content">
+                    <strong>
+                        APPLE PAY
+                    </strong>
+                    <span>
+                        Fast and secure payment
+                    </span>
+                </div>
+            </label>
+        </div>
+        <div class="card-payment-area">
+            <div class="payment-section-title">
+                <span>
+                    02
+                </span>
+                <h2>
+                    CARD DETAILS
+                </h2>
+            </div>
+            <div class="payment-form">
+                <div class="payment-field full">
+                    <label for="card-name">
+                        Cardholder Name
+                    </label>
+                    <input
+                        type="text"
+                        id="card-name"
+                        placeholder="Name on card">
+                </div>
+                <div class="payment-field full">
+                    <label for="card-number">
+                        Card Number
+                    </label>
+                    <input
+                        type="text"
+                        id="card-number"
+                        inputmode="numeric"
+                        maxlength="19"
+                        placeholder="0000 0000 0000 0000">
+                </div>
+                <div class="payment-field">
+                    <label for="expiry">
+                        Expiry Date
+                    </label>
+                    <input
+                        type="text"
+                        id="expiry"
+                        maxlength="5"
+                        placeholder="MM/YY">
+                </div>
+                <div class="payment-field">
+                    <label for="cvv">
+                        CVV
+                    </label>
+                    <input
+                        type="password"
+                        id="cvv"
+                        inputmode="numeric"
+                        maxlength="4"
+                        placeholder="•••">
+                </div>
+            </div>
+        </div>
+        <div class="payment-security">
+            <strong>
+                🔒 SECURE PAYMENT
+            </strong>
+            <p>
+                Your payment information is protected
+                and will be processed securely.
+            </p>
+        </div>
+    </div>
+    <aside class="payment-summary">
+        <div class="payment-summary-title">
+            <span>
+                NOVERA ORDER
+            </span>
+            <h2>
+                ORDER SUMMARY
+            </h2>
+        </div>
+        <div
+            id="payment-items"
+            class="payment-items">
+        </div>
+        <div class="payment-total-lines">
+            <div>
+                <span>
+                    Subtotal
+                </span>
+                <strong id="payment-subtotal">
+                    0 BHD
+                </strong>
+            </div>
+            <div>
+                <span>
+                    Shipping
+                </span>
+                <strong>
+                    Calculated
+                </strong>
+            </div>
+            <div class="payment-grand-total">
+                <span>
+                    TOTAL
+                </span>
+                <strong id="payment-total">
+                    0 BHD
+                </strong>
+            </div>
+        </div>
+        <button
+            type="button"
+            class="pay-now-btn"
+            id="pay-now-btn">
+            PAY NOW
+        </button>
+        <a
+            href="cart.html"
+            class="back-to-cart">
+            ← BACK TO CART
+        </a>
+    </aside>
+</section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
