@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+<title>NOVERA Checkout</title>
+<link
+    rel="stylesheet"
+    href="style.css">
+<link
+    rel="icon"
+    href="images/novera-logo.png">
+</head>
+<body>
+<header class="site-header">
+<a
+    href="index.html"
+    class="logo">
+    NOVERA
+</a>
+<nav class="main-nav">
+    <a href="index.html">
+        Home
+    </a>
+    <a href="collection.html">
+        Collection
+    </a>
+    <a href="about.html">
+        About
+    </a>
+    <a href="contact.html">
+        Contact
+    </a>
+    <a href="cart.html">
+        Cart
+    </a>
+</nav>
+</header>
+<main class="checkout-page">
+<section class="checkout-heading">
+    <span>
+        NOVERA / CHECKOUT
+    </span>
+    <h1>
+        COMPLETE<br>
+        YOUR ORDER.
+    </h1>
+    <p>
+        Enter your details below to continue
+        with your NOVERA order.
+    </p>
+</section>
+<section class="checkout-layout">
+    <!-- CUSTOMER INFORMATION -->
+    <div class="checkout-form">
+        <div class="checkout-section">
+            <div class="checkout-section-heading">
+                <span>
+                    01
+                </span>
+                <h2>
+                    CUSTOMER DETAILS
+                </h2>
+            </div>
+            <div class="form-grid">
+                <div class="form-field">
+                    <label for="first-name">
+                        First Name
+                    </label>
+                    <input
+                        type="text"
+                        id="first-name"
+                        name="firstName"
+                        autocomplete="given-name"
+                        placeholder="Your first name"
+                        required>
+                </div>
+                <div class="form-field">
+                    <label for="last-name">
+                        Last Name
+                    </label>
+                    <input
+                        type="text"
+                        id="last-name"
+                        name="lastName"
+                        autocomplete="family-name"
+                        placeholder="Your last name"
+                        required>
+                </div>
+                <div class="form-field full">
+                    <label for="email">
+                        Email
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        autocomplete="email"
+                        placeholder="you@example.com"
+                        required>
+                </div>
+                <div class="form-field full">
+                    <label for="phone">
+                        Phone Number
+                    </label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        autocomplete="tel"
+                        placeholder="+973"
+                        required>
+                </div>
+            </div>
+        </div>
+        <!-- SHIPPING -->
+        <div class="checkout-section">
+            <div class="checkout-section-heading">
+                <span>
+                    02
+                </span>
+                <h2>
+                    SHIPPING ADDRESS
+                </h2>
+            </div>
+            <div class="form-grid">
+                <div class="form-field full">
+                    <label for="address">
+                        Address
+                    </label>
+                    <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        autocomplete="street-address"
+                        placeholder="Building, road, area"
+                        required>
+                </div>
+                <div class="form-field">
+                    <label for="city">
+                        City / Area
+                    </label>
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        autocomplete="address-level2"
+                        placeholder="Manama"
+                        required>
+                </div>
+                <div class="form-field">
+                    <label for="postal">
+                        Postal Code
+                    </label>
+                    <input
+                        type="text"
+                        id="postal"
+                        name="postal"
+                        autocomplete="postal-code"
+                        placeholder="Optional">
+                </div>
+                <div class="form-field full">
+                    <label for="notes">
+                        Order Notes
+                    </label>
+                    <textarea
+                        id="notes"
+                        name="notes"
+                        rows="4"
+                        placeholder="Optional notes about your order"></textarea>
+                </div>
+            </div>
+        </div>
+        <!-- PAYMENT -->
+        <div class="checkout-section">
+            <div class="checkout-section-heading">
+                <span>
+                    03
+                </span>
+                <h2>
+                    PAYMENT
+                </h2>
+            </div>
+            <div class="payment-placeholder">
+                <strong>
+                    SECURE ONLINE PAYMENT
+                </strong>
+                <p>
+                    Payment will be processed securely
+                    through NOVERA's payment gateway.
+                </p>
+                <span>
+                    VISA · MASTERCARD · BENEFIT · APPLE PAY
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- ORDER SUMMARY -->
+    <aside class="checkout-summary">
+        <div class="checkout-summary-heading">
+            <span>
+                YOUR ORDER
+            </span>
+            <h2>
+                ORDER SUMMARY
+            </h2>
+        </div>
+        <div
+            class="checkout-items"
+            id="checkout-items">
+            <!-- Products inserted by JavaScript -->
+        </div>
+        <div class="checkout-summary-lines">
+            <div>
+                <span>
+                    Subtotal
+                </span>
+                <strong id="checkout-subtotal">
+                    0 BHD
+                </strong>
+            </div>
+            <div>
+                <span>
+                    Shipping
+                </span>
+                <strong id="checkout-shipping">
+                    Calculated at checkout
+                </strong>
+            </div>
+            <div class="checkout-total">
+                <span>
+                    Total
+                </span>
+                <strong id="checkout-total">
+                    0 BHD
+                </strong>
+            </div>
+        </div>
+        <button
+            type="button"
+            id="place-order"
+            class="place-order-btn">
+            CONTINUE TO PAYMENT
+        </button>
+        <p class="checkout-security">
+            🔒 Secure checkout.
+            Your payment information will be
+            processed by the payment provider.
+        </p>
+    </aside>
+</section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
