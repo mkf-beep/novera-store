@@ -1,145 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NOVERA Black Edition — premium football streetwear.">
 <title>NOVERA Black Edition</title>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="images/novera-logo.png">
 </head>
 <body>
 <header class="site-header">
-<a href="index.html" class="logo">
-    NOVERA
-</a>
-<nav class="main-nav">
-    <a href="index.html">Home</a>
-    <a href="collection.html">Collection</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-    <a href="cart.html">Cart</a>
+<a href="index.html" class="logo">NOVERA</a>
+<nav class="main-nav" aria-label="Main navigation">
+<a href="index.html">Home</a><a href="collection.html">Shop</a><a href="about.html">Story</a><a href="contact.html">Contact</a><a class="cart-nav" href="cart.html">Cart <span>0</span></a>
 </nav>
 </header>
 <main class="product-page">
 <section class="product-gallery">
-    <div class="product-main-image">
-        <img
-            src="images/novera-front.png"
-            alt="NOVERA Black Edition Front">
-    </div>
-    <div class="product-thumbnails">
-        <button type="button">
-            <img
-                src="images/novera-front.png"
-                alt="Front view">
-        </button>
-        <button type="button">
-            <img
-                src="images/novera-back.png"
-                alt="Back view">
-        </button>
-        <button type="button">
-            <img
-                src="images/novera-detail.png"
-                alt="Product detail">
-        </button>
-    </div>
+<div class="product-main-image"><span class="product-gallery-label">NOVERA / 001</span><img id="mainProductImage" src="images/novera-front.png" alt="NOVERA Black Edition front"></div>
+<div class="product-thumbnails">
+<button type="button" class="thumb active" data-image="images/novera-front.png"><img src="images/novera-front.png" alt="Front view"></button>
+<button type="button" class="thumb" data-image="images/novera-back.png"><img src="images/novera-back.png" alt="Back view"></button>
+<button type="button" class="thumb" data-image="images/novera-detail.png"><img src="images/novera-detail.png" alt="Detail view"></button>
+</div>
 </section>
 <section class="product-details">
-    <span class="product-number">
-        NOVERA / NO. 001
-    </span>
-    <h1>
-        NOVERA Black Edition
-    </h1>
-    <div class="product-price">
-        22 BHD
-    </div>
-    <p class="product-description">
-        Premium football-inspired streetwear.
-        Breathable performance fabric with a modern fit,
-        designed for everyday movement beyond the stadium.
-    </p>
-    <div class="product-option">
-        <div class="option-header">
-            <h3>Size</h3>
-            <span>Choose your size</span>
-        </div>
-        <div class="sizes">
-            <button
-                type="button"
-                class="size-option">
-                S
-            </button>
-            <button
-                type="button"
-                class="size-option">
-                M
-            </button>
-            <button
-                type="button"
-                class="size-option">
-                L
-            </button>
-            <button
-                type="button"
-                class="size-option">
-                XL
-            </button>
-        </div>
-    </div>
-    <div class="product-option">
-        <div class="option-header">
-            <h3>Color</h3>
-            <span>Black Edition</span>
-        </div>
-        <div class="colors">
-            <button
-                type="button"
-                class="color-option black"
-                aria-label="Black">
-            </button>
-        </div>
-    </div>
-    <div class="quantity">
-        <div class="option-header">
-            <h3>Quantity</h3>
-        </div>
-        <div class="quantity-control">
-            <button type="button">−</button>
-            <span>1</span>
-            <button type="button">+</button>
-        </div>
-    </div>
-    <button
-        type="button"
-        class="cart-btn">
-        ADD TO CART
-    </button>
-    <div class="product-features">
-        <div>
-            <strong>PREMIUM FABRIC</strong>
-            <span>
-                Breathable performance material
-            </span>
-        </div>
-        <div>
-            <strong>MODERN FIT</strong>
-            <span>
-                Designed for everyday movement
-            </span>
-        </div>
-        <div>
-            <strong>NOVERA QUALITY</strong>
-            <span>
-                Built for football culture
-            </span>
-        </div>
-    </div>
+<span class="product-number">NOVERA / NO. 001</span>
+<h1>NOVERA Black Edition</h1>
+<div class="product-price">22 BHD</div>
+<p class="product-description">Premium football-inspired streetwear built for life beyond the stadium. Breathable performance fabric, a relaxed modern silhouette and understated NOVERA detailing.</p>
+<div class="product-option"><div class="option-header"><h3>Size</h3><button class="size-guide" type="button" onclick="document.getElementById('sizeGuide').showModal()">Size guide +</button></div><div class="sizes"><button type="button" class="size-option">S</button><button type="button" class="size-option">M</button><button type="button" class="size-option">L</button><button type="button" class="size-option">XL</button></div></div>
+<div class="product-note">Relaxed fit · slightly wider through the body · not slim</div>
+<div class="product-option"><div class="option-header"><h3>Color</h3><span>Black Edition</span></div><div class="colors"><button type="button" class="color-option black selected" aria-label="Black"></button></div></div>
+<div class="quantity"><div class="option-header"><h3>Quantity</h3></div><div class="quantity-control"><button type="button" id="minus">−</button><span id="qty">1</span><button type="button" id="plus">+</button></div></div>
+<button type="button" class="cart-btn" id="addToCart">ADD TO CART — 22 BHD</button>
+<div class="product-trust"><div><strong>PREMIUM FABRIC</strong><span>Breathable performance material</span></div><div><strong>RELAXED FIT</strong><span>Made for movement and everyday wear</span></div><div><strong>NOVERA QUALITY</strong><span>Original football culture design</span></div><div><strong>SHIPPING</strong><span>Delivery options shown at checkout</span></div></div>
+<div class="product-accordion"><details open><summary>Product details</summary><p>Premium performance jersey with a modern relaxed silhouette, designed to feel elevated both on match day and in everyday streetwear.</p></details><details><summary>Care</summary><p>Wash inside out on a cool cycle. Do not bleach. Air dry when possible. Follow the final garment care label.</p></details><details><summary>Returns</summary><p>Return and exchange terms will be published before launch.</p></details></div>
 </section>
 </main>
-
+<dialog id="sizeGuide"><div class="modal-head"><strong>NOVERA SIZE GUIDE</strong><button type="button" onclick="this.closest('dialog').close()">×</button></div><p>Use this as a starting point for our relaxed football fit.</p><div class="size-table"><div>SIZE</div><div>CHEST</div><div>LENGTH</div><div>S</div><div>52–54 cm</div><div>70 cm</div><div>M</div><div>55–57 cm</div><div>72 cm</div><div>L</div><div>58–60 cm</div><div>74 cm</div><div>XL</div><div>61–63 cm</div><div>76 cm</div></div><small>Final measurements will be confirmed with the manufacturer before production.</small></dialog>
 <script src="script.js"></script>
-
+<script>
+document.querySelectorAll('.thumb').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.thumb').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.getElementById('mainProductImage').src=t.dataset.image;}));
+document.querySelectorAll('.size-option').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.size-option').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');}));
+let q=1;const qty=document.getElementById('qty');document.getElementById('plus').onclick=()=>{q++;qty.textContent=q};document.getElementById('minus').onclick=()=>{if(q>1){q--;qty.textContent=q}};
+document.getElementById('addToCart').onclick=()=>{const selected=document.querySelector('.size-option.selected');if(!selected){alert('Please select a size first.');return;}const item={id:'novera-black-edition',name:'NOVERA Black Edition',price:22,image:'images/novera-front.png',size:selected.textContent.trim(),quantity:q};let cart=JSON.parse(localStorage.getItem('novera_cart')||'[]');const existing=cart.find(x=>x.id===item.id&&x.size===item.size);if(existing)existing.quantity+=q;else cart.push(item);localStorage.setItem('novera_cart',JSON.stringify(cart));document.getElementById('addToCart').textContent='ADDED TO CART ✓';setTimeout(()=>{document.getElementById('addToCart').textContent='ADD TO CART — 22 BHD'},1600);};
+</script>
 </body>
 </html>
