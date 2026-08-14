@@ -1,7 +1,7 @@
 const { createClient } = require('@supabase/supabase-js');
 
 const FALLBACK = Object.freeze([
-  { id: 'novera-black-edition', name: 'NOVERA Black Edition', price: 22, currency: 'BHD', sizes: ['S','M','L','XL'], status: 'sold-out', image: '/images/novera-front.png' }
+  { id: 'novera-black-edition', name: 'NOVERA Black Edition', price: 22, currency: 'BHD', sizes: ['S','M','L','XL'], status: 'sold-out', image: '/images/novera-front.png', images: ['/images/novera-front.png'] }
 ]);
 
 module.exports = async (req, res) => {
@@ -9,37 +9,18 @@ module.exports = async (req, res) => {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return res.status(200).json({ products: FALLBACK, source: 'fallback' });
-
   try {
     const supabase = createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
-    const { data, error } = await supabase
-      .from('products')
-      .select('id,slug,name,description,price,image_url,active,inventory(stock,reserved_quantity)')
-      .eq('active', true)
-      .order('created_at', { ascending: true });
-
+    const { data, error } = await supabase.from('products').select('id,slug,name,description,price,image_url,active,inventory(stock,reserved_quantity),product_images(id,image_url,alt_text,sort_order),product_variants(id,size,color,stock,sort_order)').eq('active', true).order('created_at', { ascending: true });
     if (error) throw error;
-
     const products = (data || []).map((p) => {
-      const stock = Number(p.inventory?.stock || 0);
-      const reserved = Number(p.inventory?.reserved_quantity || 0);
-      return {
-        id: p.slug,
-        dbId: p.id,
-        name: p.name,
-        description: p.description,
-        price: Number(p.price),
-        currency: 'BHD',
-        sizes: ['S','M','L','XL'],
-        available: Math.max(0, stock - reserved),
-        status: stock - reserved > 0 ? 'in-stock' : 'sold-out',
-        image: p.image_url || `/images/novera-${p.slug}.svg`
-      };
+      const stock = Number(p.inventory?.stock || 0), reserved = Number(p.inventory?.reserved_quantity || 0);
+      const gallery = (p.product_images || []).sort((a,b)=>a.sort_order-b.sort_order).map(i=>i.image_url).filter(Boolean);
+      const variants = (p.product_variants || []).sort((a,b)=>a.sort_order-b.sort_order);
+      const sizes = [...new Set(variants.map(v=>v.size).filter(Boolean))];
+      const colors = [...new Set(variants.map(v=>v.color).filter(Boolean))];
+      return { id: p.slug, dbId: p.id, name: p.name, description: p.description, price: Number(p.price), currency: 'BHD', sizes: sizes.length ? sizes : ['S','M','L','XL'], colors, variants, available: Math.max(0, stock - reserved), status: stock - reserved > 0 ? 'in-stock' : 'sold-out', image: p.image_url || gallery[0] || `/images/novera-${p.slug}.svg`, images: gallery.length ? gallery : [p.image_url || `/images/novera-${p.slug}.svg`] };
     });
-
     return res.status(200).json({ products, source: 'supabase' });
-  } catch (error) {
-    console.error('NOVERA catalog error', error);
-    return res.status(200).json({ products: FALLBACK, source: 'fallback' });
-  }
+  } catch (error) { console.error('NOVERA catalog error', error); return res.status(200).json({ products: FALLBACK, source: 'fallback' }); }
 };
