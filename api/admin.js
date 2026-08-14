@@ -47,6 +47,23 @@ export default async function handler(req, res) {
       return json(res, 200, { ok: true, email: data.user.email });
     }
 
+    if (req.method === 'POST' && action === 'reset-password') {
+      const accessToken = typeof req.body?.accessToken === 'string' ? req.body.accessToken : '';
+      const password = typeof req.body?.password === 'string' ? req.body.password : '';
+      if (!accessToken || password.length < 10) return fail(res, 400, 'Use a password of at least 10 characters');
+
+      const supabase = publicClient(accessToken);
+      const { data: userData, error: userError } = await supabase.auth.getUser(accessToken);
+      if (userError || !userData.user) return fail(res, 401, 'This password reset link has expired or is invalid');
+
+      const { data: isAdmin, error: adminError } = await supabase.rpc('is_nova_admin');
+      if (adminError || !isAdmin) return fail(res, 403, 'This account is not an administrator');
+
+      const { error: updateError } = await supabase.auth.updateUser({ password });
+      if (updateError) return fail(res, 400, updateError.message || 'Unable to reset password');
+      return json(res, 200, { ok: true });
+    }
+
     if (req.method === 'POST' && action === 'logout') {
       res.setHeader('Set-Cookie', 'novera_admin_access=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0');
       return json(res, 200, { ok: true });
