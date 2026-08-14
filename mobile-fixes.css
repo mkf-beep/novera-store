@@ -1,0 +1,44 @@
+/* NOVERA MOBILE / CHECKOUT POLISH */
+@media (max-width: 760px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .site-header{padding:16px 18px;gap:16px;flex-wrap:wrap}
+  .logo{font-size:25px;letter-spacing:5px}
+  .main-nav{display:flex;gap:14px;overflow-x:auto;white-space:nowrap;width:100%;padding:4px 0 2px;scrollbar-width:none}
+  .main-nav::-webkit-scrollbar{display:none}
+  .main-nav a{font-size:9px;letter-spacing:2px}
+  .cart-page,.checkout-page,.payment-page,.product-page,.collection-page{width:100%;box-sizing:border-box}
+  .cart-page,.checkout-page,.payment-page{padding:70px 16px 50px}
+  .cart-layout{display:block!important}
+  .cart-items{width:100%;min-width:0}
+  .cart-product{display:grid!important;grid-template-columns:96px 1fr!important;gap:14px!important;padding:18px 0!important}
+  .cart-product-image{width:96px!important;height:128px!important}
+  .cart-product-image img{width:100%;height:100%;object-fit:cover}
+  .cart-product-info h2{font-size:16px!important;line-height:1.15}
+  .cart-product-info p,.cart-product-info span{font-size:10px!important}
+  .cart-product-actions{grid-column:1 / -1;display:flex!important;align-items:center;justify-content:space-between;gap:12px}
+  .cart-product-total{font-size:13px!important}
+  .cart-quantity{display:flex;align-items:center;gap:12px}
+  .cart-summary{position:static!important;width:100%!important;margin-top:25px;padding:20px!important;box-sizing:border-box}
+  .checkout-btn{width:100%;min-height:52px}
+  .collection-grid{grid-template-columns:1fr!important}
+  .collection-product-image{height:auto!important;aspect-ratio:1/1.15}
+  .product-page{display:block!important;padding:40px 16px!important}
+  .product-gallery,.product-details{width:100%!important}
+  .product-main-image{min-height:0!important}
+  .product-main-image img{width:100%;height:auto;display:block;object-fit:contain}
+  .product-thumbnails{display:grid!important;grid-template-columns:repeat(3,1fr);gap:8px}
+  .product-details h1{font-size:38px!important;line-height:.95}
+  .product-trust{grid-template-columns:1fr!important}
+  .spec-layout{grid-template-columns:1fr!important}
+  .spec-board{padding:70px 16px!important}
+  .spec-board h2{font-size:54px!important;letter-spacing:-3px}
+  .checkout-grid,.payment-grid{display:block!important}
+  .checkout-form,.checkout-summary,.payment-methods,.payment-summary{width:100%!important;box-sizing:border-box}
+  .checkout-form input,.checkout-form textarea,.checkout-form select{width:100%;box-sizing:border-box}
+  .payment-method{padding:16px!important}
+  .payment-provider-card{padding:20px 16px!important}
+  .order-summary{overflow:hidden}
+}
+@media (min-width:761px){
+  .main-nav{align-items:center}
+}
