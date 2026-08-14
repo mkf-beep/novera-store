@@ -63,9 +63,9 @@ export default async function handler(req, res) {
       if (error) return fail(res, 400, error.message || 'Unable to save product');
       const productId = data.product.id;
       if (Array.isArray(body.variants)) {
-        const variants = body.variants.map((v, n) => ({ product_id: productId, size: clean(v.size, 30), color: clean(v.color, 50), stock: Number(v.stock), sort_order: n })).filter(v => v.size && Number.isInteger(v.stock) && v.stock >= 0);
-        const { error: clearError } = await supabase.from('product_variants').delete().eq('product_id', productId); if (clearError) return fail(res, 400, clearError.message);
-        if (variants.length) { const { error: variantError } = await supabase.from('product_variants').insert(variants); if (variantError) return fail(res, 400, variantError.message); }
+        const { data: variantResult, error: variantError } = await supabase.rpc('admin_replace_product_variants', { p_product_id: productId, p_variants: body.variants });
+        if (variantError) return fail(res, 400, variantError.message || 'Unable to save sizes and colors');
+        data.variants = variantResult;
       }
       return json(res, 200, { ok: true, ...data });
     }
@@ -75,26 +75,24 @@ export default async function handler(req, res) {
       const { buffer, contentType } = parseImage(req.body?.image); const path = `${productId}/${crypto.randomUUID()}.${imageExt(contentType)}`;
       const { error: uploadError } = await supabase.storage.from(IMAGE_BUCKET).upload(path, buffer, { contentType, upsert: false, cacheControl: '31536000' });
       if (uploadError) return fail(res, 400, uploadError.message || 'Unable to upload image'); const { data: publicData } = supabase.storage.from(IMAGE_BUCKET).getPublicUrl(path);
-      const { data: imageRow, error: imageError } = await supabase.from('product_images').insert({ product_id: productId, image_url: publicData.publicUrl, alt_text: clean(req.body?.alt, 200), sort_order: Number(req.body?.sortOrder) || 0 }).select().single();
-      if (imageError) return fail(res, 400, imageError.message || 'Unable to save image');
-      if (Number(req.body?.sortOrder) === 0) await supabase.from('products').update({ image_url: publicData.publicUrl }).eq('id', productId);
-      return json(res, 200, { ok: true, image: imageRow });
+      const { data: imageResult, error: imageError } = await supabase.rpc('admin_add_product_image', { p_product_id: productId, p_image_url: publicData.publicUrl, p_alt_text: clean(req.body?.alt, 200), p_sort_order: Number(req.body?.sortOrder) || 0 });
+      if (imageError) return fail(res, 400, imageError.message || 'Unable to save image record');
+      return json(res, 200, { ok: true, image: imageResult });
     }
 
     if (req.method === 'DELETE' && action === 'image') {
       const imageId = clean(req.query?.id, 80); if (!imageId) return fail(res, 400, 'Image ID is required');
       const { data: row, error: readError } = await supabase.from('product_images').select('id,product_id,image_url').eq('id', imageId).single(); if (readError || !row) return fail(res, 404, 'Image not found');
       const marker = '/storage/v1/object/public/product-images/'; const storagePath = row.image_url.includes(marker) ? row.image_url.split(marker)[1] : null; if (storagePath) await supabase.storage.from(IMAGE_BUCKET).remove([storagePath]);
-      const { error } = await supabase.from('product_images').delete().eq('id', imageId); if (error) return fail(res, 400, error.message); return json(res, 200, { ok: true });
+      const { error } = await supabase.rpc('admin_delete_product_image', { p_image_id: imageId }); if (error) return fail(res, 400, error.message); return json(res, 200, { ok: true });
     }
 
     if (req.method === 'POST' && action === 'variants') {
       const productId = clean(req.body?.productId, 80), variants = Array.isArray(req.body?.variants) ? req.body.variants : [];
       if (!productId) return fail(res, 400, 'Product ID is required');
-      const rows = variants.map((v,n)=>({ product_id: productId, size: clean(v.size,30), color: clean(v.color,50), stock:Number(v.stock), sort_order:n })).filter(v=>v.size && Number.isInteger(v.stock) && v.stock>=0);
-      const { error: clearError } = await supabase.from('product_variants').delete().eq('product_id', productId); if (clearError) return fail(res,400,clearError.message);
-      if (rows.length) { const { error } = await supabase.from('product_variants').insert(rows); if (error) return fail(res,400,error.message); }
-      return json(res,200,{ok:true,variants:rows});
+      const { data, error } = await supabase.rpc('admin_replace_product_variants', { p_product_id: productId, p_variants: variants });
+      if (error) return fail(res,400,error.message || 'Unable to save variants');
+      return json(res,200,{ok:true,...data});
     }
 
     if (req.method === 'DELETE' && action === 'product') { const productId = clean(req.query?.id, 80); if (!productId) return fail(res, 400, 'Product ID is required'); const { data, error } = await supabase.rpc('admin_delete_product', { p_product_id: productId }); if (error) return fail(res, 400, error.message || 'Unable to remove product'); return json(res, 200, data || { ok: true }); }
