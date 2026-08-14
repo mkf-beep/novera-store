@@ -17,6 +17,33 @@ function publicClient(accessToken = '') {
   });
 }
 
+async function requestPasswordReset() {
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  if (!key) throw new Error('Supabase public key is not configured');
+
+  const response = await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
+    method: 'POST',
+    headers: {
+      apikey: key,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: ADMIN_EMAIL,
+      redirect_to: RESET_REDIRECT
+    })
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    let message = 'Unable to send reset email';
+    try {
+      const data = JSON.parse(text);
+      message = data.msg || data.message || data.error_description || data.error || message;
+    } catch (_) {}
+    throw new Error(message);
+  }
+}
+
 async function requireAdmin(req) {
   const token = req.cookies?.novera_admin_access;
   if (!token) return { error: 'Not authenticated' };
@@ -35,9 +62,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST' && action === 'request-reset') {
       const email = clean(req.body?.email, 254).toLowerCase();
       if (email !== ADMIN_EMAIL) return json(res, 200, { ok: true });
-      const supabase = publicClient();
-      const { error } = await supabase.auth.resetPasswordForEmail(ADMIN_EMAIL, { redirectTo: RESET_REDIRECT });
-      if (error) return fail(res, 400, error.message || 'Unable to send reset email');
+      await requestPasswordReset();
       return json(res, 200, { ok: true });
     }
 
@@ -112,6 +137,6 @@ export default async function handler(req, res) {
     return fail(res, 404, 'Unknown admin action');
   } catch (error) {
     console.error('NOVERA admin API error', error);
-    return fail(res, 500, 'Admin service unavailable');
+    return fail(res, 500, error?.message || 'Admin service unavailable');
   }
 }
