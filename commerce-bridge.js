@@ -1,4 +1,4 @@
-/* NOVERA Commerce 2.0 bridge: safe catalog, cart and pending-order flow. */
+/* NOVERA Commerce bridge: catalog-backed cart and secure pending-order flow. */
 (function () {
   const CART_KEY = 'novera_cart';
   const PENDING_KEY = 'novera_pending_order';
@@ -44,21 +44,21 @@
       button.disabled = true;
       try {
         const products = await catalog();
-        const title = (document.querySelector('.product-details h1')?.textContent || 'NOVERA Eclipse').trim();
+        const title = (document.querySelector('.product-details h1')?.textContent || '').trim();
         const product = products.find(p => p.name.toLowerCase() === title.toLowerCase());
-        const variant = product?.variants?.find(v => v.size === size && v.available > 0);
-        if (!product || !variant) return alert('This size is currently unavailable.');
+        if (!product) throw new Error('Product unavailable.');
+        if (product.available <= 0) return alert('This product is currently sold out.');
 
         const items = cart();
-        const existing = items.find(i => i.variantId === variant.id);
+        const existing = items.find(i => i.id === product.id && i.size === size);
         const nextQuantity = Math.min(20, Number(existing?.quantity || 0) + 1);
         if (existing) existing.quantity = nextQuantity;
-        else items.push({ id: product.id, variantId: variant.id, name: product.name, price: product.price, size: variant.size, color: variant.color, quantity: 1, image: product.image });
+        else items.push({ id: product.id, productId: product.id, name: product.name, price: product.price, size, color: 'Black', quantity: 1, image: product.image });
         save(items);
         window.location.href = 'cart.html';
       } catch (error) {
         console.error(error);
-        alert('Unable to check stock right now. Please try again.');
+        alert(error.message || 'Unable to check stock right now. Please try again.');
       } finally { button.disabled = false; }
     }, true);
   }
@@ -67,7 +67,6 @@
     const button = document.getElementById('place-order');
     if (!button) return;
 
-    // Never create duplicate pending orders when the customer returns to checkout.
     const existingPending = pendingOrder();
     if (existingPending?.orderId) {
       button.textContent = 'CONTINUE TO PAYMENT';
@@ -99,14 +98,11 @@
       button.disabled = true;
       button.textContent = 'RESERVING YOUR ORDER…';
       try {
-        const payload = { customer, items: items.map(i => ({ variantId: i.variantId, quantity: Number(i.quantity) })) };
-        if (items.some(i => !i.variantId)) throw new Error('Cart contains an outdated item. Please remove it and add the product again.');
-
+        const payload = { customer, items: items.map(i => ({ productId: i.productId || i.id, quantity: Number(i.quantity), size: i.size, color: i.color })) };
         const response = await fetch('/api/orders', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) });
         const data = await response.json().catch(() => ({}));
         if (!response.ok || !data.ok) throw new Error(data.error || 'Unable to create order');
 
-        // Keep the cart until payment is actually confirmed. The pending order holds a temporary reservation.
         sessionStorage.setItem(PENDING_KEY, JSON.stringify(data.order));
         window.location.href = 'payment.html';
       } catch (error) {
