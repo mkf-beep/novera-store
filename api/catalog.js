@@ -1,9 +1,7 @@
 const { createClient } = require('@supabase/supabase-js');
 
 const FALLBACK = Object.freeze([
-  { id: 'eclipse', sku: 'NVR-ECL-001', name: 'NOVERA Eclipse', price: 22, currency: 'BHD', category: 'Originals', sizes: ['S','M','L','XL','2XL'], status: 'active', image: '/images/novera-eclipse.svg' },
-  { id: 'atlas', sku: 'NVR-ATL-002', name: 'NOVERA Atlas', price: 24, currency: 'BHD', category: 'Performance', sizes: ['S','M','L','XL','2XL'], status: 'active', image: '/images/novera-atlas.svg' },
-  { id: 'velocity', sku: 'NVR-VEL-003', name: 'NOVERA Velocity', price: 22, currency: 'BHD', category: 'Heritage', sizes: ['S','M','L','XL','2XL'], status: 'active', image: '/images/novera-velocity.svg' }
+  { id: 'novera-black-edition', name: 'NOVERA Black Edition', price: 22, currency: 'BHD', sizes: ['S','M','L','XL'], status: 'sold-out', image: '/images/novera-front.png' }
 ]);
 
 module.exports = async (req, res) => {
@@ -11,17 +9,34 @@ module.exports = async (req, res) => {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return res.status(200).json({ products: FALLBACK, source: 'fallback' });
+
   try {
     const supabase = createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
-    const { data, error } = await supabase.from('products').select('id,slug,name,description,price_bhd,status,product_variants(id,sku,size,color,stock,reserved)').eq('status', 'active').order('created_at', { ascending: true });
+    const { data, error } = await supabase
+      .from('products')
+      .select('id,slug,name,description,price,image_url,active,inventory(stock,reserved_quantity)')
+      .eq('active', true)
+      .order('created_at', { ascending: true });
+
     if (error) throw error;
-    const products = (data || []).map((p) => ({
-      id: p.slug, dbId: p.id, sku: `NVR-${p.slug.toUpperCase()}`, name: p.name, description: p.description,
-      price: Number(p.price_bhd), currency: 'BHD', sizes: (p.product_variants || []).map(v => v.size),
-      variants: (p.product_variants || []).map(v => ({ id: v.id, sku: v.sku, size: v.size, color: v.color, available: Math.max(0, Number(v.stock) - Number(v.reserved || 0)) })),
-      status: (p.product_variants || []).some(v => Number(v.stock) - Number(v.reserved || 0) > 0) ? 'in-stock' : 'sold-out',
-      image: `/images/novera-${p.slug}.svg`
-    }));
+
+    const products = (data || []).map((p) => {
+      const stock = Number(p.inventory?.stock || 0);
+      const reserved = Number(p.inventory?.reserved_quantity || 0);
+      return {
+        id: p.slug,
+        dbId: p.id,
+        name: p.name,
+        description: p.description,
+        price: Number(p.price),
+        currency: 'BHD',
+        sizes: ['S','M','L','XL'],
+        available: Math.max(0, stock - reserved),
+        status: stock - reserved > 0 ? 'in-stock' : 'sold-out',
+        image: p.image_url || `/images/novera-${p.slug}.svg`
+      };
+    });
+
     return res.status(200).json({ products, source: 'supabase' });
   } catch (error) {
     console.error('NOVERA catalog error', error);
