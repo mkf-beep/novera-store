@@ -1,35 +1,8 @@
-/* NOVERA TEST PRODUCT CATALOG
-   Temporary test catalog using original NOVERA concept artwork.
-*/
-
+/* NOVERA TEST PRODUCT CATALOG — temporary test products */
 const NOVERA_TEST_PRODUCTS = {
-  eclipse: {
-    id: "novera-eclipse",
-    name: "NOVERA Eclipse",
-    price: 22,
-    color: "Graphite / Black",
-    image: "images/novera-eclipse.svg",
-    gallery: ["images/novera-eclipse.svg", "images/novera-eclipse.svg", "images/novera-eclipse.svg"],
-    number: "001"
-  },
-  atlas: {
-    id: "novera-atlas",
-    name: "NOVERA Atlas",
-    price: 24,
-    color: "Stone / Forest",
-    image: "images/novera-atlas.svg",
-    gallery: ["images/novera-atlas.svg", "images/novera-atlas.svg", "images/novera-atlas.svg"],
-    number: "002"
-  },
-  velocity: {
-    id: "novera-velocity",
-    name: "NOVERA Velocity",
-    price: 22,
-    color: "Burgundy / Gold",
-    image: "images/novera-velocity.svg",
-    gallery: ["images/novera-velocity.svg", "images/novera-velocity.svg", "images/novera-velocity.svg"],
-    number: "003"
-  }
+  eclipse: { id: "novera-eclipse", name: "NOVERA Eclipse", price: 22, color: "Graphite / Black", image: "images/novera-eclipse.svg", gallery: ["images/novera-eclipse.svg", "images/novera-eclipse.svg", "images/novera-eclipse.svg"], number: "001" },
+  atlas: { id: "novera-atlas", name: "NOVERA Atlas", price: 24, color: "Stone / Forest", image: "images/novera-atlas.svg", gallery: ["images/novera-atlas.svg", "images/novera-atlas.svg", "images/novera-atlas.svg"], number: "002" },
+  velocity: { id: "novera-velocity", name: "NOVERA Velocity", price: 22, color: "Burgundy / Gold", image: "images/novera-velocity.svg", gallery: ["images/novera-velocity.svg", "images/novera-velocity.svg", "images/novera-velocity.svg"], number: "003" }
 };
 
 function getTestProduct() {
@@ -43,7 +16,7 @@ function applyTestProduct(product) {
   const number = document.querySelector(".product-number");
   const galleryLabel = document.querySelector(".product-gallery-label");
   const description = document.querySelector(".product-description");
-  const color = document.querySelector(".color-option + span") || document.querySelector(".option-header span");
+  const color = document.querySelector(".option-header span");
   const mainImage = document.getElementById("mainProductImage");
   const payButton = document.getElementById("addToCart");
 
@@ -53,29 +26,24 @@ function applyTestProduct(product) {
   if (galleryLabel) galleryLabel.textContent = `NOVERA / ${product.number}`;
   if (description) description.textContent = "Original NOVERA football-culture jersey concept with breathable performance fabric, a relaxed modern silhouette and premium everyday detailing.";
   if (color) color.textContent = product.color;
-  if (mainImage) {
-    mainImage.src = product.image;
-    mainImage.alt = `${product.name} front`;
-  }
+  if (mainImage) { mainImage.src = product.image; mainImage.alt = `${product.name} front`; }
   if (payButton) payButton.textContent = `ADD TO CART — ${product.price} BHD`;
-
   document.title = `${product.name} — NOVERA`;
 
   document.querySelectorAll(".thumb").forEach((thumb, index) => {
     const image = product.gallery[index] || product.image;
     thumb.dataset.image = image;
     const img = thumb.querySelector("img");
-    if (img) {
-      img.src = image;
-      img.alt = `${product.name} view ${index + 1}`;
-    }
+    if (img) { img.src = image; img.alt = `${product.name} view ${index + 1}`; }
   });
 }
 
 function setupNoveraTestProductPage() {
+  if (window.__noveraTestProductInitialized) return;
+  window.__noveraTestProductInitialized = true;
+
   const product = getTestProduct();
   applyTestProduct(product);
-
   const cartButton = document.querySelector(".cart-btn");
   if (!cartButton) return;
 
@@ -103,45 +71,25 @@ function setupNoveraTestProductPage() {
   });
 
   cartButton.onclick = () => {
-    if (!selectedSize) {
-      alert("Please select a size.");
-      return;
-    }
-
+    if (!selectedSize) { alert("Please select a size."); return; }
     const cart = JSON.parse(localStorage.getItem("novera_cart") || "[]");
-    const item = {
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      size: selectedSize,
-      color: product.color,
-      quantity,
-      image: product.image
-    };
-
+    const item = { id: product.id, name: product.name, price: product.price, size: selectedSize, color: product.color, quantity, image: product.image };
     const existing = cart.find(entry => entry.id === item.id && entry.size === item.size && entry.color === item.color);
     if (existing) existing.quantity = Math.min(existing.quantity + quantity, 20);
     else cart.push(item);
-
     localStorage.setItem("novera_cart", JSON.stringify(cart));
     window.location.href = "cart.html";
   };
 }
 
-/* Remove stale test-cart entries that point at the retired product artwork. */
+/* Remove stale cart entries using retired product artwork. */
 try {
   const cart = JSON.parse(localStorage.getItem("novera_cart") || "[]");
-  const cleanCart = Array.isArray(cart)
-    ? cart.filter(item => !String(item.image || "").match(/novera-(front|back|detail)\.png|images\/photo\.png/i))
-    : [];
+  const cleanCart = Array.isArray(cart) ? cart.filter(item => !String(item.image || "").match(/novera-(front|back|detail)\.png|images\/photo\.png/i)) : [];
   localStorage.setItem("novera_cart", JSON.stringify(cleanCart));
 } catch (_) {}
 
-/* Override the old product-page initializer before DOMContentLoaded fires. */
+/* Override the retired product initializer before DOMContentLoaded. */
 window.setupProductPage = setupNoveraTestProductPage;
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", setupNoveraTestProductPage, { once: true });
-} else {
-  setupNoveraTestProductPage();
-}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", setupNoveraTestProductPage, { once: true });
+else setupNoveraTestProductPage();
