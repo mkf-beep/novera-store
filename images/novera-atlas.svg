@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+<rect width="800" height="1000" fill="#efece3"/>
+<rect x="55" y="55" width="690" height="890" rx="8" fill="#f7f5ef" stroke="#1d2f29" stroke-opacity=".35"/>
+<path d="M250 205 L335 155 L400 205 L465 155 L550 205 L525 310 L495 300 L500 760 Q400 810 300 760 L305 300 L275 310Z" fill="#d9d3c4" stroke="#1d2f29" stroke-width="5"/>
+<path d="M335 155 L400 205 L465 155 L450 250 L400 285 L350 250Z" fill="#1d2f29"/>
+<path d="M300 760 L500 760 L535 835 L265 835Z" fill="#c6bfae"/>
+<path d="M305 300 L250 330 L275 420 L315 400Z" fill="#1d2f29"/><path d="M495 300 L550 330 L525 420 L485 400Z" fill="#1d2f29"/>
+<text x="400" y="385" text-anchor="middle" fill="#1d2f29" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="700" letter-spacing="8">NOVERA</text>
+<path d="M370 450 L430 450 L400 510Z" fill="#b99a55"/>
+<text x="400" y="905" text-anchor="middle" fill="#1d2f29" font-family="Arial,Helvetica,sans-serif" font-size="16" letter-spacing="5">ATLAS / 002</text>
+</svg>
