@@ -22,7 +22,12 @@ async function decorateProducts(supabase, products) {
     supabase.from('product_images').select('id,product_id,image_url,alt_text,sort_order').in('product_id', ids).order('sort_order').order('created_at'),
     supabase.from('product_variants').select('id,product_id,size,color,stock,sort_order').in('product_id', ids).order('sort_order').order('created_at')
   ]);
-  return (products || []).map(p => ({ ...p, images: (images || []).filter(i => i.product_id === p.id), variants: (variants || []).filter(v => v.product_id === p.id) }));
+  return (products || []).map(p => ({
+    ...p,
+    inventory: Array.isArray(p.inventory) ? p.inventory : [p.inventory || {}],
+    images: (images || []).filter(i => i.product_id === p.id),
+    variants: (variants || []).filter(v => v.product_id === p.id)
+  }));
 }
 
 export default async function handler(req, res) {
@@ -97,7 +102,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'DELETE' && action === 'product') { const productId = clean(req.query?.id, 80); if (!productId) return fail(res, 400, 'Product ID is required'); const { data, error } = await supabase.rpc('admin_delete_product', { p_product_id: productId }); if (error) return fail(res, 400, error.message || 'Unable to remove product'); return json(res, 200, data || { ok: true }); }
     if (req.method === 'PATCH' && action === 'inventory') { const productId = clean(req.body?.productId, 80), stock = Number(req.body?.stock); if (!productId || !Number.isInteger(stock) || stock < 0) return fail(res, 400, 'Invalid stock'); const { error } = await supabase.rpc('admin_update_inventory', { p_product_id: productId, p_stock: stock }); if (error) return fail(res, 400, error.message || 'Unable to update inventory'); return json(res, 200, { ok: true }); }
-    if (req.method === 'PATCH' && action === 'order') { const orderId = clean(req.body?.orderId, 80), status = clean(req.body?.status, 30), allowed = ['pending','paid','processing','shipped','delivered','cancelled','refunded']; if (!orderId || !allowed.includes(status)) return fail(res, 400, 'Invalid order status'); const { error } = await supabase.rpc('admin_update_order_status', { p_order_id: orderId, p_status: status }); if (error) return fail(res, 400, error.message || 'Unable to update order'); return json(res, 200, { ok: true }); }
+    if (req.method === 'PATCH' && action === 'order') { const orderId = clean(req.body?.orderId, 80), status = clean(req.body?.status, 30), allowed = ['pending','paid','processing','shipped','delivered','cancelled','refunded']; if (!orderId || !allowed.includes(status)) return fail(res, 400, 'Invalid order status'); const { error } = await supabase.rpc('admin_update_order_status', { p_order_id: orderId, p_status: status }); if (error) return fail(res, 400, error.message || 'Unable to update order status'); return json(res, 200, { ok: true }); }
     return fail(res, 404, 'Unknown admin action');
   } catch (error) { console.error('NOVERA admin API error', error); return fail(res, 500, error?.message || 'Admin service unavailable'); }
 }
