@@ -11,6 +11,7 @@ function clean(v, max = 200) { return typeof v === 'string' ? v.trim().slice(0, 
 function publicClient(accessToken = '') {
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   if (!key) throw new Error('Supabase public key is not configured');
+  if (!/^[\x00-\x7F]*$/.test(key)) throw new Error('Supabase public key contains invalid characters');
   return createClient(SUPABASE_URL, key, {
     auth: { autoRefreshToken: false, persistSession: false },
     global: accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : undefined
@@ -18,30 +19,11 @@ function publicClient(accessToken = '') {
 }
 
 async function requestPasswordReset() {
-  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  if (!key) throw new Error('Supabase public key is not configured');
-
-  const response = await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
-    method: 'POST',
-    headers: {
-      apikey: key,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      email: ADMIN_EMAIL,
-      redirect_to: RESET_REDIRECT
-    })
+  const supabase = publicClient();
+  const { error } = await supabase.auth.resetPasswordForEmail(ADMIN_EMAIL, {
+    redirectTo: RESET_REDIRECT
   });
-
-  if (!response.ok) {
-    const text = await response.text();
-    let message = 'Unable to send reset email';
-    try {
-      const data = JSON.parse(text);
-      message = data.msg || data.message || data.error_description || data.error || message;
-    } catch (_) {}
-    throw new Error(message);
-  }
+  if (error) throw new Error(error.message || 'Unable to send reset email');
 }
 
 async function requireAdmin(req) {
