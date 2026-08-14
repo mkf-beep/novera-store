@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = 'https://wkcxebubwmcsmyywokpz.supabase.co';
+const ADMIN_EMAIL = 'volkeno93@gmail.com';
+const RESET_REDIRECT = 'https://novera-store.vercel.app/admin-reset.html';
 
 function json(res, status, body) { return res.status(status).json(body); }
 function fail(res, status, error) { return json(res, status, { ok: false, error }); }
@@ -29,6 +31,15 @@ async function requireAdmin(req) {
 export default async function handler(req, res) {
   try {
     const action = clean(req.query?.action, 40);
+
+    if (req.method === 'POST' && action === 'request-reset') {
+      const email = clean(req.body?.email, 254).toLowerCase();
+      if (email !== ADMIN_EMAIL) return json(res, 200, { ok: true });
+      const supabase = publicClient();
+      const { error } = await supabase.auth.resetPasswordForEmail(ADMIN_EMAIL, { redirectTo: RESET_REDIRECT });
+      if (error) return fail(res, 400, error.message || 'Unable to send reset email');
+      return json(res, 200, { ok: true });
+    }
 
     if (req.method === 'POST' && action === 'login') {
       const email = clean(req.body?.email, 254).toLowerCase();
