@@ -7,7 +7,7 @@
 <body>
 <header class="site-header"><a href="index.html" class="logo">NOVERA</a><nav class="main-nav"><a href="index.html">Home</a><a href="collection.html">Collection</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="cart.html">Cart</a></nav></header>
 <main class="payment-page">
-<section class="payment-heading"><span>NOVERA / PAYMENT</span><h1>SECURE<br>CHECKOUT.</h1><p>Your order is ready. Payment will be completed through NOVERA's secure payment provider.</p></section>
+<section class="payment-heading"><span>NOVERA / PAYMENT</span><h1>SECURE<br>CHECKOUT.</h1><p>Your order is reserved securely. Payment will be completed through NOVERA's approved payment provider.</p></section>
 <section class="payment-layout">
 <div class="payment-methods">
 <div class="payment-section-title"><span>01</span><h2>PAYMENT METHOD</h2></div>
@@ -16,8 +16,10 @@
 <label class="payment-option"><input type="radio" name="payment-method" value="benefit"><div class="payment-option-content"><strong>BENEFIT / BENEFITPAY</strong><span>Bahrain online payment</span></div></label>
 <label class="payment-option"><input type="radio" name="payment-method" value="apple-pay"><div class="payment-option-content"><strong>APPLE PAY</strong><span>Available when enabled by the payment provider</span></div></label>
 </div>
-<div class="payment-security"><strong>🔒 PAYMENT DATA IS NEVER STORED ON THIS SITE</strong><p>NOVERA will use a PCI-compliant payment provider for card and wallet processing. This static storefront does not collect or store card numbers, expiry dates or CVV codes.</p></div>
-<div class="payment-gateway-notice"><span>GATEWAY CONNECTION</span><h3>SECURE PAYMENT PROVIDER PENDING</h3><p>The storefront is ready for the production payment gateway. The live merchant credentials and provider callback will be connected before launch. No card information is accepted while this connection is pending.</p></div>
+<div class="payment-security"><strong>🔒 PAYMENT DATA IS NEVER STORED ON THIS SITE</strong><p>NOVERA will use a PCI-compliant payment provider for card and wallet processing. This storefront does not collect or store card numbers, expiry dates or CVV codes.</p></div>
+<div class="payment-gateway-notice"><span>GATEWAY CONNECTION</span><h3>SECURE PAYMENT PROVIDER PENDING</h3><p>The production merchant credentials and payment callback will be connected before launch. No card information is accepted while this connection is pending.</p></div>
 </div>
 <aside class="payment-summary"><div class="payment-summary-title"><span>NOVERA ORDER</span><h2>ORDER SUMMARY</h2></div><div id="payment-items" class="payment-items"></div><div class="payment-total-lines"><div><span>Subtotal</span><strong id="payment-subtotal">0 BHD</strong></div><div><span>Shipping</span><strong>Calculated</strong></div><div class="payment-grand-total"><span>TOTAL</span><strong id="payment-total">0 BHD</strong></div></div><button type="button" class="pay-now-btn" id="pay-now-btn" disabled>PAYMENT GATEWAY NOT CONNECTED</button><a href="cart.html" class="back-to-cart">← BACK TO CART</a></aside>
-</section></main><script src="script.js"></script></body></html>
+</section></main>
+<script src="script.js"></script><script src="payment-bridge.js"></script>
+</body></html>
