@@ -2,6 +2,14 @@
   "outputDirectory": ".",
   "headers": [
     {
+      "source": "/api/admin(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store, no-cache, must-revalidate, max-age=0" },
+        { "key": "CDN-Cache-Control", "value": "private, no-store, no-cache, max-age=0" },
+        { "key": "Vercel-CDN-Cache-Control", "value": "private, no-store, no-cache, max-age=0" }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
