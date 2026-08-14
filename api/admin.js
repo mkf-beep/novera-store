@@ -1,6 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = 'https://wkcxebubwmcsmyywokpz.supabase.co';
+// This is Supabase's publishable/anon key. It is intentionally safe for client/server use.
+// Keep the server-side admin API independent from a malformed Vercel environment value.
+const SUPABASE_PUBLIC_KEY = 'sb_publishable_fdqrwx3n_qRuOqHK35w5kg_W9tb3HPK';
 const ADMIN_EMAIL = 'volkeno93@gmail.com';
 const RESET_REDIRECT = 'https://novera-store.vercel.app/admin-reset.html';
 
@@ -9,10 +12,7 @@ function fail(res, status, error) { return json(res, status, { ok: false, error 
 function clean(v, max = 200) { return typeof v === 'string' ? v.trim().slice(0, max) : ''; }
 
 function publicClient(accessToken = '') {
-  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  if (!key) throw new Error('Supabase public key is not configured');
-  if (!/^[\x00-\x7F]*$/.test(key)) throw new Error('Supabase public key contains invalid characters');
-  return createClient(SUPABASE_URL, key, {
+  return createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY, {
     auth: { autoRefreshToken: false, persistSession: false },
     global: accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : undefined
   });
